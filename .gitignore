@@ -164,3 +164,4 @@ node_modules
 
 # Custom
 data/
+static/index-bundle.js
