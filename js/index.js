@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from "react-dom/client";
 import SearchBar from './components/SearchBar';
-import "./index.css";
+import "./styles/tailwind.css";
 
 
 const page = (
