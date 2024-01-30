@@ -36,10 +36,10 @@ const SearchApp = () => {
                     key={index}
                     title={item.title}
                     overview={item.overview}
-                    genres={item.genres}
-                    year={item.year}
-                    imdbUrl={item.imdbUrl}
-                    imageUrl={item.imageUrl}
+                    genres={item.genres ?? []}
+                    year={item.year ?? ""}
+                    imdbUrl={item.imdbUrl ?? ""}
+                    imageUrl={item.imageUrl ?? ""}
                 />
             ))}
 
