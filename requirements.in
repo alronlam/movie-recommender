@@ -1,6 +1,7 @@
 # --find-links https://download.pytorch.org/whl/torch_stable.html
 faiss-cpu
 django
+djangorestframework
 ipykernel
 langchain
 pandas

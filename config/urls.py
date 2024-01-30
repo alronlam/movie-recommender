@@ -18,7 +18,10 @@ from django.contrib import admin
 from django.urls import path
 from django.views.generic.base import TemplateView
 
+from config.recommender.views import MovieRecommendView
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", TemplateView.as_view(template_name="movie_reco.html")),
+    path("recommend/", MovieRecommendView.as_view(), name="movie_recommend"),
 ]
