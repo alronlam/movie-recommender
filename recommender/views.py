@@ -12,8 +12,11 @@ class MovieRecommendView(APIView):
     engine = SemanticSearchEngine.instance()
 
     def get(self, request, format=None):
-        query = request.query_params.get("query")
-        docs = self.engine.search(query, k=10)
+        query = request.query_params.get("query").strip()
+        if not query:
+            return HttpResponse([], content_type="application/json")
+
+        docs = self.engine.search(query, k=30)
 
         data = []
         for doc in docs:

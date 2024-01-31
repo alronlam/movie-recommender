@@ -70,8 +70,7 @@ class SemanticSearchEngine:
         data_dict[
             "poster_url"
         ] = f"https://image.tmdb.org/t/p/original{doc.metadata['poster_path']}"
-
-        data_dict["release_date"] = doc.metadata["release_date"]
         data_dict["imdb_url"] = f"https://imdb.com/title/{doc.metadata['imdb_id']}"
+        data_dict.update(doc.metadata)
 
         return data_dict
