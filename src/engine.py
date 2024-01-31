@@ -1,5 +1,6 @@
 import json
 
+import requests
 from langchain.embeddings import CacheBackedEmbeddings
 from langchain.storage import LocalFileStore
 from langchain_community.embeddings import HuggingFaceBgeEmbeddings
@@ -10,6 +11,8 @@ from config import settings
 
 class SemanticSearchEngine:
     _instance = None
+
+    BGE_PREFIX = "Represent this sentence for searching relevant movie descriptions: "
 
     @staticmethod
     def instance(model_name="BAAI/bge-small-en"):
@@ -35,7 +38,9 @@ class SemanticSearchEngine:
         FAISS_INDEX_PATH = settings.BASE_DIR / "data/faiss_index"
         self.db = FAISS.load_local(FAISS_INDEX_PATH, self.embedder)
 
-    def search(self, query, k=50, score_threshold=0.5):
+    def search(self, query, k=50, score_threshold=0.5, custom_prefix=BGE_PREFIX):
+        query = custom_prefix + query
+
         retriever = self.db.as_retriever(
             search_type="similarity_score_threshold",
             search_kwargs={
@@ -59,6 +64,14 @@ class SemanticSearchEngine:
             except Exception:
                 pass
 
-        data_dict["genres"] = json.loads(data_dict["genres"].replace("'", '"'))
+        data_dict["genres"] = [
+            x["name"] for x in json.loads(data_dict["genres"].replace("'", '"'))
+        ]
+        data_dict[
+            "poster_url"
+        ] = f"https://image.tmdb.org/t/p/original{doc.metadata['poster_path']}"
+
+        data_dict["release_date"] = doc.metadata["release_date"]
+        data_dict["imdb_url"] = f"https://imdb.com/title/{doc.metadata['imdb_id']}"
 
         return data_dict

@@ -38,8 +38,8 @@ const SearchApp = () => {
                     overview={item.overview}
                     genres={item.genres ?? []}
                     year={item.year ?? ""}
-                    imdbUrl={item.imdbUrl ?? ""}
-                    imageUrl={item.imageUrl ?? ""}
+                    imdbUrl={item.imdb_url ?? ""}
+                    imageUrl={item.poster_url ?? ""}
                 />
             ))}
 

@@ -3,14 +3,23 @@
 import React, { useState } from 'react';
 
 const MovieCard = ({ title, overview, genres, year, imdbUrl, imageUrl }) => {
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [imageLoaded, setImageLoaded] = useState(true);
+
+    const handleError = () => {
+        setImageLoaded(false);
+    };
+
 
     return (
         <div className="flex flex-col lg:flex-row justify-center items-center mt-5 mb-5 ">
             <div className="flex bg-white rounded-lg shadow-lg p-6 w-[80vw] border border-black">
                 {/* Movie Poster */}
-                <img className="h-64 mr-5 self-center" src={imageUrl} alt="Movie Poster" />
+                {imageLoaded ? (
+                    <img className="h-64 mr-5 self-center" src={imageUrl} alt="Movie Poster" onError={handleError} />
+                ) : (
+                    <img className="h-64 mr-5 self-center" src="/static/poster-missing.webp" alt="Movie Poster" onError={handleError} />
+                )}
+
 
                 {/* Text Content */}
                 <div>
