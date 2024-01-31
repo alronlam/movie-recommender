@@ -65,21 +65,39 @@ const SearchApp = () => {
                     type="search"
                     {...register("query")}
                 />
-
             </header>
 
-            {apiData.map((item, index) => (
-                <MovieCard
-                    key={index}
-                    title={item.title}
-                    overview={item.overview}
-                    genres={item.genres ?? []}
-                    year={item.year ?? ""}
-                    imdbUrl={item.imdb_url ?? ""}
-                    imageUrl={item.poster_url ?? ""}
-                />
-            ))}
-        </div>
+            <div>
+                {apiData.length === 0 ? (
+                    <div className="flex justify-center items-center h-[90vh]">
+                        <figure>
+                            <a href={"https://www.reddit.com/r/PixelArt/comments/10uravr/snes_just_chilling/"} target="_blank">
+                                <img
+                                    src="/static/pixel-room.gif"
+                                    alt="Blank Image"
+                                    className="w-[90vw] md:w-[500px]"
+                                />
+                                <figcaption className="flex justify-center text-xl italic">Nothing to see here. Try a new search.</figcaption>
+                                <figcaption className="flex justify-center text-sm italic"><a href={" https://www.reddit.com/r/PixelArt/comments/10uravr/snes_just_chilling/"} target="_blank">© u/teubase from Reddit</a></figcaption>
+                            </a>
+                        </figure>
+                    </div>
+                ) : (
+                    apiData.map((item, index) => (
+                        <MovieCard
+                            key={index}
+                            title={item.title}
+                            overview={item.overview}
+                            genres={item.genres ?? []}
+                            year={item.year ?? ""}
+                            imdbUrl={item.imdb_url ?? ""}
+                            imageUrl={item.poster_url ?? ""}
+                        />
+                    ))
+                )
+                }
+            </div >
+        </div >
     );
 };
 
