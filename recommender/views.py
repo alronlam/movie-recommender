@@ -27,6 +27,8 @@ class MovieRecommendView(APIView):
                 "year": doc["release_date"][:4],
                 "poster_url": doc["poster_url"],
                 "imdb_url": doc["imdb_url"],
+                "rating": doc["vote_average"],
+                "rating_count": doc["vote_count"],
             }
             data.append(data_dict)
 

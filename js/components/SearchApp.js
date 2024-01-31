@@ -61,7 +61,7 @@ const SearchApp = () => {
                     id="searchInput"
                     autoFocus
                     className="w-full md:w-3/5  px-4 py-2 border rounded"
-                    placeholder="Describe the kind of movie you like..."
+                    placeholder="Describe the kind of movie you want..."
                     type="search"
                     {...register("query")}
                 />
@@ -92,6 +92,8 @@ const SearchApp = () => {
                             year={item.year ?? ""}
                             imdbUrl={item.imdb_url ?? ""}
                             imageUrl={item.poster_url ?? ""}
+                            rating={item.rating ?? 0}
+                            ratingCount={item.rating_count ?? 0}
                         />
                     ))
                 )

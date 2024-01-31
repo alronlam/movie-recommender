@@ -1,14 +1,35 @@
 // YourComponent.js
 
 import React, { useState } from 'react';
+import { FaStar } from "react-icons/fa";
 
-const MovieCard = ({ title, overview, genres, year, imdbUrl, imageUrl }) => {
+const MovieCard = ({ title, overview, genres, year, imdbUrl, imageUrl, rating, ratingCount }) => {
     const [imageLoaded, setImageLoaded] = useState(true);
 
     const handleError = () => {
         setImageLoaded(false);
     };
 
+    const renderStars = () => {
+        const maxStars = 10;
+        const displayStars = 5;
+        const filledStars = Math.round((rating / maxStars) * displayStars);
+        const blankStars = displayStars - filledStars;
+
+        const stars = [];
+
+        // Filled stars
+        for (let i = 0; i < filledStars; i++) {
+            stars.push(<FaStar key={i} color="#ffc107" />);
+        }
+
+        // Blank stars
+        for (let i = 0; i < blankStars; i++) {
+            stars.push(<FaStar key={filledStars + i} color="#ddd" />);
+        }
+
+        return stars;
+    };
 
     return (
         <div className="flex flex-col lg:flex-row justify-center items-center mt-5 mb-5 ">
@@ -26,6 +47,10 @@ const MovieCard = ({ title, overview, genres, year, imdbUrl, imageUrl }) => {
                     <a className="text-2xl font-bold mb-10 underline" target="_blank" href={imdbUrl}>
                         {title} ({year})
                     </a>
+                    <div className="flex items-center">
+                        {renderStars()}
+                        <span className="ml-2">{`${rating} (${ratingCount} ratings)`}</span>
+                    </div>
                     <p className="text-gray-600 mt-5 mb-4">{overview}</p>
                     <div className="flex flex-wrap">
                         {genres.map((genre, index) => (
