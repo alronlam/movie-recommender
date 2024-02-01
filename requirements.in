@@ -7,5 +7,6 @@ langchain
 pandas
 pip-tools
 pre-commit
+pydantic
 sentence_transformers
 streamlit

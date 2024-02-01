@@ -37,7 +37,7 @@ const SearchApp = () => {
                 } else {
                     fetchData(query);
                 }
-            }, 100); // Adjust the debounce delay as needed (e.g., 300 milliseconds)
+            }, 1000); // Adjust the debounce delay as needed (e.g., 300 milliseconds)
         };
 
         // Attach the event listener
@@ -92,8 +92,8 @@ const SearchApp = () => {
                             year={item.year ?? ""}
                             imdbUrl={item.imdb_url ?? ""}
                             imageUrl={item.poster_url ?? ""}
-                            rating={item.rating ?? 0}
-                            ratingCount={item.rating_count ?? 0}
+                            rating={item.vote_average ?? 0}
+                            ratingCount={item.vote_count ?? 0}
                         />
                     ))
                 )

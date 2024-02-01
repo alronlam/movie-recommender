@@ -17,7 +17,7 @@ class SemanticSearchEngine:
     @staticmethod
     def instance(model_name="BAAI/bge-small-en"):
         if SemanticSearchEngine._instance is None:
-            _instance = SemanticSearchEngine("BAAI/bge-small-en")
+            _instance = SemanticSearchEngine(model_name)
         return _instance
 
     def __init__(self, model_name):
@@ -29,13 +29,14 @@ class SemanticSearchEngine:
             model_kwargs=model_kwargs,
             encode_kwargs=encode_kwargs,
         )
-        store = LocalFileStore(settings.BASE_DIR / "data/cache/")
 
+        # TODO: change this once cache is fixed
+        store = LocalFileStore(settings.BASE_DIR / "data/v1_erroneous_index/cache/")
         self.embedder = CacheBackedEmbeddings.from_bytes_store(
             bge_embedding_model, store, namespace="BAAI-bge-large-en"
         )
 
-        FAISS_INDEX_PATH = settings.BASE_DIR / "data/faiss_index"
+        FAISS_INDEX_PATH = settings.BASE_DIR / "data/v1_erroneous_index/faiss_index"
         self.db = FAISS.load_local(FAISS_INDEX_PATH, self.embedder)
 
     def search(self, query, k=50, score_threshold=0.5, custom_prefix=BGE_PREFIX):

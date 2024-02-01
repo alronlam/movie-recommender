@@ -4,34 +4,37 @@ import json
 from django.http import HttpResponse
 from rest_framework.views import APIView
 
-from src.engine import SemanticSearchEngine
+from recommender.engine.faiss_engine import LangchainFaissEngine
+from recommender.reranker.crossencoder_reranker import CrossEncoderReranker
+from recommender.reranker.popularity_reranker import PopularityReranker
+from recommender.reranker.rating_reranker import RatingReranker
 
 
 # Create your views here.
 class MovieRecommendView(APIView):
-    engine = SemanticSearchEngine.instance()
+    engine = LangchainFaissEngine.instance()
+    popularity_reranker = PopularityReranker()
+    rating_reranker = RatingReranker()
+    crossencoder_reranker = CrossEncoderReranker()
 
     def get(self, request, format=None):
+        # Get the query param
         query = request.query_params.get("query").strip()
+
+        # Edge case: query is empty -> return empty
         if not query:
             return HttpResponse([], content_type="application/json")
 
-        docs = self.engine.search(query, k=30)
+        # Get recommendations
+        movies = self.engine.search(query, k=100)
 
-        data = []
-        for doc in docs:
-            data_dict = {
-                "title": doc["title"],
-                "overview": doc["overview"],
-                "genres": doc["genres"],
-                "year": doc["release_date"][:4],
-                "poster_url": doc["poster_url"],
-                "imdb_url": doc["imdb_url"],
-                "rating": doc["vote_average"],
-                "rating_count": doc["vote_count"],
-            }
-            data.append(data_dict)
+        # Re-rank
+        movies = self.rating_reranker.rerank(movies=movies, query=query, k=15)
+        movies = self.crossencoder_reranker.rerank(movies=movies, query=query, k=None)
+        # movies = self.rating_reranker.rerank(movies=movies, query=query, k=None)
 
-        output = json.dumps(data)
+        # Format Output
+        results = [movie.model_dump() for movie in movies]
+        results = json.dumps(results)
 
-        return HttpResponse(output, content_type="application/json")
+        return HttpResponse(results, content_type="application/json")
