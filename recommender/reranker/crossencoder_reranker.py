@@ -14,6 +14,8 @@ class CrossEncoderReranker(AbstractReranker):
     def rerank(
         self, movies: List[MovieResult], query, k=None, *args, **kwargs
     ) -> List[MovieResult]:
+        threshold = kwargs.get("threshold", 0)
+
         sentence_combinations = [
             [query, ",".join(movie.genres) + " " + movie.title + " " + movie.overview]
             for movie in movies
@@ -27,12 +29,12 @@ class CrossEncoderReranker(AbstractReranker):
 
         # Exclude 0 values
         reranked_filtered = [
-            movies[i] for i in sim_scores_argsort if similarity_scores[i] > 0.002
+            movies[i] for i in sim_scores_argsort if similarity_scores[i] >= threshold
         ]
         scores_filtered = [
             similarity_scores[i]
             for i in sim_scores_argsort
-            if similarity_scores[i] > 0.002
+            if similarity_scores[i] >= threshold
         ]
 
         # Print the scores

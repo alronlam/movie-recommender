@@ -30,7 +30,9 @@ class MovieRecommendView(APIView):
 
         # Re-rank
         movies = self.rating_reranker.rerank(movies=movies, query=query, k=15)
-        movies = self.crossencoder_reranker.rerank(movies=movies, query=query, k=None)
+        movies = self.crossencoder_reranker.rerank(
+            movies=movies, query=query, k=None, threshold=0.002
+        )
         # movies = self.rating_reranker.rerank(movies=movies, query=query, k=None)
 
         # Format Output
