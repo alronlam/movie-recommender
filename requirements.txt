@@ -107,6 +107,8 @@ idna==3.6
     #   yarl
 importlib-metadata==7.0.1
     # via streamlit
+iprogress==0.4
+    # via -r requirements.in
 ipykernel==6.29.0
     # via -r requirements.in
 ipython==8.20.0
@@ -151,6 +153,8 @@ langsmith==0.0.83
     #   langchain
     #   langchain-community
     #   langchain-core
+loguru==0.7.2
+    # via -r requirements.in
 markdown-it-py==3.0.0
     # via rich
 markupsafe==2.1.4
@@ -269,6 +273,7 @@ pyarrow==15.0.0
     # via streamlit
 pydantic==2.5.3
     # via
+    #   -r requirements.in
     #   langchain
     #   langchain-core
     #   langsmith
@@ -287,6 +292,8 @@ python-dateutil==2.8.2
     #   jupyter-client
     #   pandas
     #   streamlit
+python-dotenv==1.0.1
+    # via -r requirements.in
 pytz==2023.3.post1
     # via
     #   djangorestframework
@@ -342,6 +349,7 @@ sentencepiece==0.1.99
 six==1.16.0
     # via
     #   asttokens
+    #   iprogress
     #   python-dateutil
 smmap==5.0.1
     # via gitdb
