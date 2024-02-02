@@ -1,5 +1,6 @@
 import json
 import os
+from datetime import datetime
 from pathlib import Path
 
 from langchain.embeddings.cache import CacheBackedEmbeddings
@@ -66,16 +67,39 @@ class LangchainFaissEngine(AsbtractRecommendationEngine):
         return movies
 
     def data_dict_to_movie(self, data_dict):
-        data_dict["year"] = data_dict["release_date"][:4]
+        # Parse genre string
         data_dict["genres"] = [
-            x["name"] for x in json.loads(data_dict["genres"].replace("'", '"'))
+            x["name"] for x in json.loads(data_dict.get("genres", "").replace("'", '"'))
         ]
-        data_dict["poster_url"] = os.path.join(
-            "https://image.tmdb.org/t/p/original", data_dict["poster_path"]
+
+        # Derived fields
+        try:
+            date_obj = datetime.strptime(data_dict["release_date"], "%Y-%m-%d")
+            data_dict["year"] = str(date_obj.year)
+        except Exception:
+            data_dict["year"] = "Unknown"
+
+        data_dict["poster_url"] = (
+            os.path.join(
+                "https://image.tmdb.org/t/p/original", data_dict["poster_path"]
+            )
+            if data_dict["poster_path"]
+            else ""
         )
-        data_dict["imdb_url"] = os.path.join(
-            "https://imdb.com/title/", data_dict["imdb_id"] + "/"
+        data_dict["imdb_url"] = (
+            os.path.join("https://imdb.com/title/", data_dict["imdb_id"] + "/")
+            if data_dict["imdb_id"]
+            else ""
         )
+
+        # Data cleaning - set ratings to 0 if blank
+        data_dict["vote_average"] = (
+            data_dict["vote_average"] if data_dict["vote_average"] else 0
+        )
+        data_dict["vote_count"] = (
+            data_dict["vote_count"] if data_dict["vote_count"] else 0
+        )
+
         result = MovieResult(**data_dict)
         return result
 

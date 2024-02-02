@@ -16,6 +16,7 @@ const SearchApp = () => {
             const data = await response.json();
             setApiData(data);
         } catch (error) {
+            setApiData([]);
             console.error(error);
         } finally {
             setLoading(false);
@@ -65,7 +66,7 @@ const SearchApp = () => {
                                 className="w-[90vw] md:w-[500px]"
                             />
 
-                            <figcaption className="flex justify-center text-sm italic"><a href={"https://dribbble.com/shots/19097276-Pixel-Art-Loading-Screen-Animation"} target="_blank">Searching... © Jayant Prasad</a></figcaption>
+                            <figcaption className="flex justify-center text-sm italic"><a href={"https://dribbble.com/shots/19097276-Pixel-Art-Loading-Screen-Animation"} target="_blank">Searching... (© Jayant Prasad)</a></figcaption>
                         </a>
                     </div>
                 ) :
