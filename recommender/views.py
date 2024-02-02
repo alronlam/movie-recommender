@@ -33,7 +33,6 @@ class MovieRecommendView(APIView):
         movies = self.crossencoder_reranker.rerank(
             movies=movies, query=query, k=None, threshold=0.002
         )
-        # movies = self.rating_reranker.rerank(movies=movies, query=query, k=None)
 
         # Format Output
         results = [movie.model_dump() for movie in movies]
