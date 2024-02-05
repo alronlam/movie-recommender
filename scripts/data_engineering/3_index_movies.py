@@ -1,7 +1,6 @@
 from datetime import datetime
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 from langchain.embeddings import CacheBackedEmbeddings
 from langchain.storage import LocalFileStore
@@ -69,18 +68,9 @@ def load_or_generate_faiss_index(docs, index_dir, cached_embedder, overwrite=Fal
     return db
 
 
-if __name__ == "__main__":
-    MOVIES_FILEPATH = (
-        settings.BASE_DIR / "data/movies_metadata_fixed_posters_w_keywords.csv"
-    )
-
-    model_name = "BAAI/llm-embedder"
-    search_cols = ["title", "overview", "genres", "keywords_human_readable"]
-
-    model_name_wo_org = Path(model_name).parts[-1]
-    faiss_index_path = settings.BASE_DIR / f"data/faiss_index_{model_name_wo_org}"
-    embedding_cache_path = settings.BASE_DIR / f"data/cache_{model_name_wo_org}/"
-
+def main(
+    model_name, embedding_cache_path, faiss_index_path, search_cols, overwrite=False
+):
     # Load Embedding Model
     logger.info(f"Loading embedding model {model_name}")
     model_kwargs = {"device": "cpu"}
@@ -94,7 +84,7 @@ if __name__ == "__main__":
     cached_embedder = CacheBackedEmbeddings.from_bytes_store(
         bge_embedding_model,
         document_embedding_cache=LocalFileStore(embedding_cache_path),
-        namespace=model_name_wo_org,
+        namespace=namespace,
     )
 
     # Load Docs
@@ -114,5 +104,29 @@ if __name__ == "__main__":
         docs=documents,
         index_dir=faiss_index_path,
         cached_embedder=cached_embedder,
-        overwrite=True,
+        overwrite=overwrite,
+    )
+
+    return db
+
+
+if __name__ == "__main__":
+    # Input Vars
+    MOVIES_FILEPATH = settings.BASE_DIR / "data/movies_metadata_preprocessed.csv"
+    OVERWRITE = False
+    MODEL_NAME = "BAAI/bge-large-en-v1.5"
+    SEARCH_COLS = ["title", "overview", "genres", "keywords_human_readable"]
+
+    # Derived Vars
+    model_name_wo_org = Path(MODEL_NAME).parts[-1]
+    namespace = f"{model_name_wo_org}_title_overview_genres_keywords"
+    faiss_index_path = settings.BASE_DIR / f"data/faiss_index_{namespace}"
+    embedding_cache_path = settings.BASE_DIR / f"data/cache_{namespace}/"
+
+    main(
+        model_name=MODEL_NAME,
+        embedding_cache_path=embedding_cache_path,
+        faiss_index_path=faiss_index_path,
+        search_cols=SEARCH_COLS,
+        overwrite=OVERWRITE,
     )
