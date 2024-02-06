@@ -13,3 +13,4 @@ class MovieResult(BaseModel):
     poster_url: str
     vote_average: Optional[float] = Field(serialization_alias="rating")
     vote_count: Optional[int] = Field(serialization_alias="rating_count")
+    keywords_human_readable: Optional[str] = []
