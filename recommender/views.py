@@ -43,7 +43,7 @@ class MovieRecommendView(APIView):
             query=query,
             k=None,
             threshold=-9.0,
-            weight_by_rating=True,
+            weight_by_rating=False,
             debug=settings.DEBUG,
         )
         reranker_end = time.time()
