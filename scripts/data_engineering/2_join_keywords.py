@@ -1,15 +1,5 @@
-import sys
-
-sys.path.append("../../")
-import os
-from concurrent.futures import ThreadPoolExecutor
-from pathlib import Path
-
 import loosejson
 import pandas as pd
-import requests
-from dotenv import load_dotenv
-from tqdm.notebook import tqdm
 
 from config import settings
 
