@@ -165,3 +165,4 @@ node_modules
 # Custom
 data/
 static/index-bundle.js
+static/faiss_index*

@@ -61,7 +61,7 @@ const SearchApp = () => {
                     <div className="flex justify-center items-center h-[90vh]">
                         <a href={"https://www.reddit.com/r/PixelArt/comments/10uravr/snes_just_chilling/"} target="_blank">
                             <img
-                                src="/static/loading-dog.gif"
+                                src="{% static 'loading-dog.gif' %}"
                                 alt="Loading..."
                                 className="w-[90vw] md:w-[500px]"
                             />
@@ -76,8 +76,8 @@ const SearchApp = () => {
                             <figure>
                                 <a href={"https://www.reddit.com/r/PixelArt/comments/10uravr/snes_just_chilling/"} target="_blank">
                                     <img
-                                        src="/static/pixel-room.gif"
-                                        alt="Blank Image"
+                                        src="{% static 'pixel-room.gif' %}"
+                                        alt="No Results"
                                         className="w-[90vw] md:w-[500px]"
                                     />
                                     <figcaption className="flex justify-center text-xl italic">Nothing to see here. Try a new search.</figcaption>

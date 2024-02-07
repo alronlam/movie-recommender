@@ -12,3 +12,8 @@ setup:
 requirements:
 	pip-compile requirements.in -o requirements.txt -v
 	pip-sync requirements.txt
+
+dev:
+	npm run dev &
+	./env/bin/python3 manage.py runserver
+	

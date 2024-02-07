@@ -1,0 +1,11 @@
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+.env
+*.log
+.git
+data/
+config/settings_local.py
