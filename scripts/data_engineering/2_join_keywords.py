@@ -1,4 +1,5 @@
-import loosejson
+import ast
+
 import pandas as pd
 
 from config import settings
@@ -31,7 +32,7 @@ def main(movies_filepath, keywords_filepath, output_filepath):
     # Pre-process the keywords DF
     keywords_df = pd.read_csv(keywords_filepath, dtype={"id": object})
     keywords_df["keywords"] = keywords_df["keywords"].apply(
-        lambda x: loosejson.parse_loosely_defined_json(x)
+        lambda x: ast.literal_eval(x)
     )
     keywords_df = dedupe_keywords(keywords_df)
     keywords_df["keywords_human_readable"] = keywords_df["keywords"].apply(

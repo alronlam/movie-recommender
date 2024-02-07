@@ -6,11 +6,9 @@ ipykernel
 IProgress
 langchain
 loguru
-loosejson
 pandas
 pip-tools
 pre-commit
 pydantic
 python-dotenv
 sentence_transformers
-streamlit
