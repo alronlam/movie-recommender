@@ -166,3 +166,4 @@ node_modules
 assets/
 data/
 models/
+static/index-bundle.js
