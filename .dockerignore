@@ -4,8 +4,12 @@ __pycache__
 *.pyd
 *.db
 *.sqlite3
-.env
 *.log
-.git
+.env
+.git/
+env/
+node_modules/
 data/
 config/settings_local.py
+Dockerfile
+.dockerignore

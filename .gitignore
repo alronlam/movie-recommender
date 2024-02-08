@@ -163,6 +163,8 @@ cython_debug/
 node_modules
 
 # Custom
+assets/
 data/
+models/
 static/index-bundle.js
 static/faiss_index*
