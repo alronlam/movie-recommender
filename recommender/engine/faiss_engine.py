@@ -25,13 +25,13 @@ class LangchainFaissEngine(AsbtractRecommendationEngine):
 
     def __init__(
         self,
-        model_name="BAAI/llm-embedder",
+        model_name="models/BAAI/llm-embedder",
         faiss_index_dir=settings.BASE_DIR
-        / f"static/faiss_index_llm-embedder_title_overview_genres_keywords",
+        / f"models/faiss_index_llm-embedder_title_overview_genres_keywords",
         append_bge_prefix=False,
     ):
         embeddings_cache_dir = (
-            settings.BASE_DIR / "static/runtime_cache_llm-embedder",
+            settings.BASE_DIR / "models/runtime_cache_llm-embedder",
         )
         self.model_name = model_name
         self.append_bge_prefix = append_bge_prefix
