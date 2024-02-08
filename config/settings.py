@@ -140,3 +140,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
+
+EMBEDDER_MODEL = "BAAI/llm-embedder"
+RERANKER_MODEL = "cross-encoder/ms-marco-MiniLM-L-6-v2"

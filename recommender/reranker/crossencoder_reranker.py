@@ -4,6 +4,7 @@ import numpy as np
 from loguru import logger
 from sentence_transformers import CrossEncoder
 
+from config import settings
 from recommender.models import MovieResult
 from recommender.reranker.base import AbstractReranker
 
@@ -18,7 +19,7 @@ class CrossEncoderReranker(AbstractReranker):
             CrossEncoderReranker._instance = CrossEncoderReranker()
         return CrossEncoderReranker._instance
 
-    def __init__(self, model_name="models/cross-encoder/ms-marco-MiniLM-L-12-v2"):
+    def __init__(self, model_name=f"models/{settings.RERANKER_MODEL}"):
         self.cross_encoder = CrossEncoder(model_name)
 
     def rerank(

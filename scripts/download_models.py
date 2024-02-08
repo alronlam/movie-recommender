@@ -7,9 +7,9 @@ if __name__ == "__main__":
     cache_dir = settings.BASE_DIR / "models"
 
     print("Downloading cross-encoder...")
-    model = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-12-v2")
-    model.save(str(cache_dir / "cross-encoder/ms-marco-MiniLM-L-12-v2"))
+    model = CrossEncoder(settings.RERANKER_MODEL)
+    model.save(str(cache_dir / settings.RERANKER_MODEL))
 
     print("Downloading embedder...")
-    model = SentenceTransformer("BAAI/llm-embedder")
-    model.save(str(cache_dir / "BAAI/llm-embedder"))
+    model = SentenceTransformer(settings.EMBEDDER_MODEL)
+    model.save(str(cache_dir / settings.EMBEDDER_MODEL))
