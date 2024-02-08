@@ -18,8 +18,8 @@ class LangchainFaissEngine(AsbtractRecommendationEngine):
     @staticmethod
     def instance():
         if LangchainFaissEngine._instance is None:
-            _instance = LangchainFaissEngine()
-        return _instance
+            LangchainFaissEngine._instance = LangchainFaissEngine()
+        return LangchainFaissEngine._instance
 
         # Loade Model
 

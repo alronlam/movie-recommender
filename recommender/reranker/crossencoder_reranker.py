@@ -15,8 +15,8 @@ class CrossEncoderReranker(AbstractReranker):
     @staticmethod
     def instance():
         if CrossEncoderReranker._instance is None:
-            _instance = CrossEncoderReranker()
-        return _instance
+            CrossEncoderReranker._instance = CrossEncoderReranker()
+        return CrossEncoderReranker._instance
 
     def __init__(self, model_name="cross-encoder/ms-marco-MiniLM-L-12-v2"):
         self.cross_encoder = CrossEncoder(model_name)
