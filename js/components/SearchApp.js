@@ -3,7 +3,14 @@ import { useForm } from "react-hook-form";
 import MovieCard from "./MovieCard";
 
 const SearchApp = () => {
-    const { register, handleSubmit, setValue } = useForm();
+
+    const rankingOptions = [
+        { value: 'popularity', text: 'Prioritize popular ⭐' },
+        { value: 'relevance', text: 'Show hidden gems 💎' },
+    ];
+
+    const { register, handleSubmit, setValue, watch } = useForm();
+    const selectedRanking = watch('ranking');
     const [apiData, setApiData] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -11,9 +18,9 @@ const SearchApp = () => {
     const emptyImgUrl = URLS.emptyImgUrl;
 
 
-    const fetchData = async (query) => {
+    const fetchData = async (query, ranking) => {
         setLoading(true);
-        const url = `/recommend?query=${encodeURIComponent(query)}`;
+        const url = `/recommend?query=${encodeURIComponent(query)}&ranking=${encodeURIComponent(ranking)}`;
         try {
             const response = await fetch(url);
             const data = await response.json();
@@ -28,28 +35,53 @@ const SearchApp = () => {
 
     const onSubmit = (data) => {
         const query = data.query.trim();
-        setValue("query", query);
+        const ranking = data.ranking.trim();
 
         if (query === "") {
             setApiData([]);
         } else {
-            fetchData(query);
+            fetchData(query, ranking);
         }
     };
 
+    // Manually trigger form submission on select change
+    const handleSelectChange = (event) => {
+        setValue('ranking', event.target.value);
+        handleSubmit(onSubmit)();
+    };
 
     return (
         <div>
             <header className="sticky top-0 bg-slate-600 p-4 flex items-center justify-center h-[10vh] w-screen">
-                <form className="w-full md:w-3/5 lg:w-2/5 flex items-center justify-center" onSubmit={handleSubmit(onSubmit)}>
+                <form id="searchForm" className="w-full md:w-4/5 lg:w-3/5 flex items-center justify-center" onSubmit={handleSubmit(onSubmit)}>
+
+
+                    {/* Search Input */}
                     <input
                         id="searchInput"
                         autoFocus
                         className="w-full px-4 py-2 border rounded"
                         placeholder="Describe the kind of movie you want..."
                         type="search"
+
                         {...register("query")}
                     />
+
+                    {/* Dropdown Menu */}
+                    <select
+                        className="ml-2 px-4 py-2 border rounded"
+                        {...register("ranking")}
+                        onChange={handleSelectChange}
+                        value={selectedRanking}
+                    >
+                        {rankingOptions.map(option => (
+                            <option key={option.value} value={option.value}>
+                                {option.text}
+                            </option>
+                        ))}
+                    </select>
+
+                    {/* Submit Button */}
                     <button
                         type="submit"
                         className="ml-2 px-4 py-2 bg-green-500 text-white rounded"
@@ -58,6 +90,7 @@ const SearchApp = () => {
                     </button>
                 </form>
             </header>
+
 
             <div>
                 {loading ? (
@@ -83,9 +116,9 @@ const SearchApp = () => {
                                         alt="Empty"
                                         className="w-[90vw] md:w-[500px]"
                                     />
-                                    <figcaption className="flex justify-center text-xl italic">Nothing to see here. Try a new search.</figcaption>
-                                    <figcaption className="flex justify-center text-sm italic"><a href={" https://www.reddit.com/r/PixelArt/comments/10uravr/snes_just_chilling/"} target="_blank">© u/teubase from Reddit</a></figcaption>
                                 </a>
+                                <figcaption className="flex justify-center text-xl italic">Nothing to see here. Try a new search.</figcaption>
+                                <figcaption ><a className="flex justify-center text-sm italic" href={" https://www.reddit.com/r/PixelArt/comments/10uravr/snes_just_chilling/"} target="_blank">© u/teubase from Reddit</a></figcaption>
                             </figure>
                         </div>
                     ) : (

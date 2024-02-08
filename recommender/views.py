@@ -19,8 +19,10 @@ class MovieRecommendView(APIView):
     crossencoder_reranker = CrossEncoderReranker.instance()
 
     def get(self, request, format=None):
-        # Get the query param
+        # Get the query params
         query = request.query_params.get("query").strip()
+        ranking = request.query_params.get("ranking").strip()
+        weight_by_rating = ranking.lower() == "popularity"
 
         # Edge case: query is empty -> return empty
         if not query:
@@ -43,7 +45,7 @@ class MovieRecommendView(APIView):
             query=query,
             k=None,
             threshold=-9.0,
-            weight_by_rating=False,
+            weight_by_rating=weight_by_rating,
             debug=settings.DEBUG,
         )
         reranker_end = time.time()
