@@ -10,6 +10,8 @@ __pycache__
 env/
 node_modules/
 data/
+experiments/
+assets/
 config/settings_local.py
 Dockerfile
 .dockerignore
