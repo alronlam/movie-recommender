@@ -6,11 +6,6 @@ COPY requirements.txt .
 RUN pip install pip-tools==7.3.*
 RUN pip install -r requirements.txt
 
-# RUN apt-get update && apt-get -y install npm@9.5.1
-# COPY package*.json .
-# RUN npm install
-# RUN npm run prod
-
 COPY . .
 RUN python manage.py migrate
 RUN python manage.py collectstatic --noinput

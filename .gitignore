@@ -166,5 +166,3 @@ node_modules
 assets/
 data/
 models/
-static/index-bundle.js
-static/faiss_index*
