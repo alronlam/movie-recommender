@@ -30,9 +30,9 @@ SECRET_KEY = os.getenv(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv("DEBUG", "True").lower() == "true"
 
-ALLOWED_HOSTS = ["localhost"]
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
 
 
 # Application definition
@@ -140,9 +140,3 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
-
-# Override settings with settings_local.py
-try:
-    from config.settings_local import *
-except ImportError:
-    pass
