@@ -8,5 +8,4 @@ Live Demo: [https://nlp-movie-recommender.fly.dev](https://nlp-movie-recommender
 Or click the image for a demo video on YouTube:
 [![Demo Video](./static/movie_reco_screenshot.png)](https://youtu.be/sbFGIR79REY)
 
-
-This is a Django app with React embedded within to provide SPA functionality for some interactive pages.
+This is a Django app with React embedded within to provide a smoother search experience with an SPA.
