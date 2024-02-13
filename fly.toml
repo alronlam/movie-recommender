@@ -22,7 +22,7 @@ console_command = '/code/manage.py shell'
 
 [[vm]]
   cpu_kind = 'shared'
-  cpus = 4
+  cpus = 8
   memory_mb = 2048
 
 [[statics]]
