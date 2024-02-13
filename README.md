@@ -8,4 +8,11 @@ Live Demo: [https://nlp-movie-recommender.fly.dev](https://nlp-movie-recommender
 Or click the image for a demo video on YouTube:
 [![Demo Video](./static/movie_reco_screenshot.png)](https://youtu.be/sbFGIR79REY)
 
-This is a Django app with React embedded within to provide a smoother search experience with an SPA.
+
+## Other Details
+- 🛠️ Tech Stack
+    - This is a Django app with React embedded within to provide a smoother search experience with an SPA.
+    - Deployed through fly.io
+- 🛢 Data: 
+    - The movie database being search over is from ["The Movies Dataset"](https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset) on Kaggle, but with poster URLs fixed (when available from TMDB). 
+    - This being a static data snapshot from 2018 means the search app doesn't have recent movies.
