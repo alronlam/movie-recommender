@@ -5,8 +5,8 @@ import MovieCard from "./MovieCard";
 const SearchApp = () => {
 
     const rankingOptions = [
-        { value: 'popularity', text: 'Prioritize popular ⭐' },
         { value: 'relevance', text: 'Show hidden gems 💎' },
+        { value: 'popularity', text: 'Prioritize popular ⭐' },
     ];
 
     const { register, handleSubmit, setValue, watch } = useForm();
